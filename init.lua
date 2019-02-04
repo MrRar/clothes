@@ -147,11 +147,39 @@ function update_player_clothes(player)
 		player:set_properties(player_props)
 	end
 end
+
+local unknown_inventory_engine = false
+
 function add_clothes_button_to_formspec(player)
+	if not unknown_inventory_engine then
+		return
+	end
 	local formspec = player:get_inventory_formspec()
 	formspec = formspec .. "image_button[-1.1,-1.1;1,1;clothes_icon.png;clothes;;true;true;clothes_icon.png]"
 	player:set_inventory_formspec(formspec)
 end
+
+if rawget(
+	_G,
+	"unified_inventory"
+) then
+	unified_inventory.register_button(
+		"clothes:configure",
+		{
+			type = "image",
+			image = "clothes_icon.png",
+			tooltip = "Configure clothes",
+			hide_lite=true,
+			action = show_clothes_config,
+			condition = function(player)
+				return true
+			end,
+		}
+	)
+else
+	unknown_inventory_engine = true
+end
+
 minetest.register_on_joinplayer(function(player)
 	local player_name = player:get_player_name()
 	if not clothes[player_name] then
