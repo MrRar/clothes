@@ -1,5 +1,5 @@
 local armor_intalled = minetest.global_exists("armor")
-local clothes = {}
+clothes = {}
 local num_faces = 0
 local num_skins = 0
 local num_hairs = 0
