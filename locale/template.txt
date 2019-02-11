@@ -1,0 +1,7 @@
+### init.lua
+skin =
+face =
+hair =
+head gear =
+pants =
+shirt =

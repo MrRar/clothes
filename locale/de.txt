@@ -1,0 +1,7 @@
+### init.lua
+skin = Haut
+face = Gesicht
+hair = Haare
+head gear = Kopfbedeckung
+pants = Hose
+shirt = Oberteil

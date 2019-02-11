@@ -1,3 +1,12 @@
+local MP = minetest.get_modpath(
+    minetest.get_current_modname(
+    )
+)
+
+local S, NS = dofile(
+    MP .. "/intllib.lua"
+)
+
 local armor_intalled = minetest.global_exists("armor")
 local clothes = {}
 local num_faces = 0
@@ -24,12 +33,12 @@ for _, texture in pairs(textures) do
 end
 local current_tab_indexes = {} -- IN: player name OUT: current tab index
 local tabs = {
-	"skin",
-	"face",
-	"hair",
-	"head gear",
-	"pants",
-	"shirt",
+	S("skin"),
+	S("face"),
+	S("hair"),
+	S("head gear"),
+	S("pants"),
+	S("shirt"),
 }
 local clothes_file_name = minetest.get_worldpath() .. "/clothes.lua"
 function show_clothes_config(player)
@@ -42,7 +51,7 @@ function show_clothes_config(player)
 	formspec = formspec:sub(0, formspec:len() - 1) -- remove trailing comma
 	formspec = formspec .. ";" .. current_tab_index .. ";true;false]"
 	local current_tab = tabs[current_tab_index]
-	if current_tab == "skin" then
+	if current_tab == S("skin") then
 		for i = 1, num_skins do
 			local column = (i - 1) % 9
 			local row = math.floor((i - 1) / 9)
@@ -52,7 +61,7 @@ function show_clothes_config(player)
 			formspec = formspec
 				.. "image_button[" .. column .. "," .. row .. ";1,1;clothes_skin_" .. i .. "_preview.png;" .. i .. ";;false;false;]"
 		end
-	elseif current_tab == "face" then
+	elseif current_tab == S("face") then
 		for i = 1, num_faces do
 			local column = (i - 1) % 9
 			local row = math.floor((i - 1) / 9)
@@ -62,7 +71,7 @@ function show_clothes_config(player)
 			formspec = formspec
 				.. "image_button[" .. column .. "," .. row .. ";1,1;clothes_face_" .. i .. ".png;" .. i .. ";;false;false;]"
 		end
-	elseif current_tab == "hair" then
+	elseif current_tab == S("hair") then
 
 		for i = 1, num_hairs do
 			local column = (i - 1) % 9
@@ -73,7 +82,7 @@ function show_clothes_config(player)
 			formspec = formspec
 				.. "image_button[" .. column .. "," .. row .. ";1,1;clothes_hair_" .. i .. "_preview.png;" .. i .. ";;false;false;]"
 		end
-	elseif current_tab == "head gear" then
+	elseif current_tab == S("head gear") then
 		for i = 1, num_head_gears do
 			local column = (i - 1) % 9
 			local row = math.floor((i - 1) / 9)
@@ -83,7 +92,7 @@ function show_clothes_config(player)
 			formspec = formspec
 				.. "image_button[" .. column .. "," .. row .. ";1,1;clothes_head_gear_" .. i .. "_preview.png;" .. i .. ";;false;false;]"
 		end
-	elseif current_tab == "pants" then
+	elseif current_tab == S("pants") then
 		for i = 1, num_pants do
 			local column = (i - 1) % 9 * 0.5
 			local row = math.floor((i - 1) / 9) * 2
@@ -93,7 +102,7 @@ function show_clothes_config(player)
 			formspec = formspec
 				.. "image_button[" .. column .. "," .. row .. ";0.5,2;clothes_pants_" .. i .. "_preview.png;" .. i .. ";;false;false;]"
 		end
-	elseif current_tab == "shirt" then
+	elseif current_tab == S("shirt") then
 		for i = 1, num_shirts do
 			local column = (i - 1) % 9
 			local row = math.floor((i - 1) / 9) * 2
@@ -186,17 +195,17 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			else
 				local current_tab_index = current_tab_indexes[player:get_player_name()]
 				local current_tab = tabs[current_tab_index]
-				if current_tab == "skin" then
+				if current_tab == S("skin") then
 					clothes[player:get_player_name()].skin = tonumber(str)
-				elseif current_tab == "face" then
+				elseif current_tab == S("face") then
 					clothes[player:get_player_name()].face = tonumber(str)
-				elseif current_tab == "hair" then
+				elseif current_tab == S("hair") then
 					clothes[player:get_player_name()].hair = tonumber(str)
-				elseif current_tab == "head gear" then
+				elseif current_tab == S("head gear") then
 					clothes[player:get_player_name()].head_gear = tonumber(str)
-				elseif current_tab == "pants" then
+				elseif current_tab == S("pants") then
 					clothes[player:get_player_name()].pants = tonumber(str)
-				elseif current_tab == "shirt" then
+				elseif current_tab == S("shirt") then
 					clothes[player:get_player_name()].shirt = tonumber(str)
 				end
 				update_player_clothes(player)
